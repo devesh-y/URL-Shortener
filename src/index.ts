@@ -43,7 +43,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
         });
         if(existing){    
             await existing.save()
-            return res.status(200).send(`http://localhost:5000/${existing.shorturl}`)
+            return res.status(200).send(existing.shorturl)
         }
         const salt=random();  
         const newcreated=await createshort({
@@ -51,7 +51,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
             shorturl:(authentication(salt,fullurl).slice(0,10))
         })
 
-        return res.status(200).send(`http://localhost:5000/${newcreated.shorturl}`);
+        return res.status(200).send(newcreated.shorturl);
 
     }
     catch(error){
