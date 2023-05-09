@@ -39,6 +39,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
             return res.send(400).send("invalid")
         }
         const existing= await getbyFullUrl(fullurl).catch((err)=>{
+            
             console.log("unable to fetch from server");
         });
         if(existing){    

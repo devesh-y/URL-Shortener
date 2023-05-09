@@ -1,7 +1,8 @@
 import "./app.css"
 import React, { useState } from "react";
-const WEBURL='sh-mlto.onrender.com'
+
 function App() {
+  const WEBURL='sh-mlto.onrender.com'
   const [textinput,setinput]=useState("");
 
   const changetext=(e:React.ChangeEvent<HTMLInputElement>):void=>{
