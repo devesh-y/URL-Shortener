@@ -1,5 +1,6 @@
 import "./app.css"
 import React, { useState } from "react";
+const WEBURL='sh-mlto.onrender.com'
 function App() {
   const [textinput,setinput]=useState("");
 
@@ -9,10 +10,11 @@ function App() {
   }
   
   const mysubmit=async (e:React.MouseEvent<HTMLButtonElement>)=>{
-        e.preventDefault();
-
+        e.preventDefault();   
+        console.log("clicked");
+        
         var fullurl=textinput;
-        const weburl=`http://localhost:5000/shrinkit`;
+        const weburl=`https://`+WEBURL+`/shrinkit`;
         var data=JSON.stringify({fullurl})
         let obj={
             method:'POST',
@@ -24,9 +26,10 @@ function App() {
         const res=await fetch(weburl,obj);
         const finalurl:string=await res.text();
         setinput("");
-        (document.getElementById("output") as HTMLElement).innerText=finalurl;
-        (document.getElementById("output") as HTMLElement).setAttribute("href",finalurl);
-
+        (document.getElementById("output") as HTMLElement).innerText=WEBURL+"/"+finalurl;
+        (document.getElementById("output") as HTMLElement).setAttribute("href","https://"+WEBURL+"/"+finalurl);
+        console.log("completed");
+        
         return;
   }
   

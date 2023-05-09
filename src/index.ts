@@ -42,7 +42,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
             console.log("unable to fetch from server");
         });
         if(existing){    
-            await existing.save()
+            
             return res.status(200).send(existing.shorturl)
         }
         const salt=random();  
@@ -60,7 +60,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
 })  
 
 app.listen(process.env.PORT,()=>{
-    console.log(`server is listening at http://localhost:${process.env.PORT}`);
+    console.log(`server is listening at ${process.env.PORT}`);
 })
 
 const mongourl:string=`mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
