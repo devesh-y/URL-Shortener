@@ -59,7 +59,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
     }
 })  
 
-app.listen(process.env.PORT || 5000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log(`server is listening at http://localhost:${process.env.PORT}`);
 })
 
