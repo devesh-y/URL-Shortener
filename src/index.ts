@@ -4,14 +4,17 @@ import bodyParser from "body-parser"
 import { config } from "dotenv";
 import { createshort ,getbyFullUrl,getByshortUrl} from "./db/dbSchema";
 import { authentication, random } from "./helper/helper";
-import cors from "cors"
 const app=express();
 
 app.use(bodyParser.json());
 config();
-app.use(cors({
-    credentials:true
-}))
+app.use((req, res,next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app/');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    next();
+  });
 
 
 const mongourl:string=`mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
