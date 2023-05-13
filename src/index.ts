@@ -9,10 +9,10 @@ const app=express();
 app.use(bodyParser.json());
 config();
 app.use((req, res,next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app/');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app/');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header('Access-Control-Allow-Methods', 'GET');
     next();
   });
 
