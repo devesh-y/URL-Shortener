@@ -27,7 +27,10 @@ mongoose.connection.once('connected', () => {
     console.log('Connected to MongoDB');
 
 });
-
+setInterval(()=>{
+    console.log("service is on");
+    
+},60000)
 app.get("/:shorturl",async(req:express.Request,res:express.Response)=>{
     try{
         const {shorturl}=req.params;
