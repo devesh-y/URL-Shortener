@@ -55,7 +55,7 @@ app.post("/shrinkit",async (req:express.Request,res:express.Response)=>{
     try{
         const {fullurl}=req.body;
         if(!fullurl){
-            return res.send(400).send("invalid")
+            return res.status(400).send("invalid")
         }
         const existing= await getbyFullUrl(fullurl).catch((err)=>{
             
