@@ -1,11 +1,16 @@
 import "./app.css"
-import React, { useState } from "react";
-
+import React, { useCallback, useState } from "react";
+import urlRegex from "url-regex";
 function App() {
     const website: string = 'sh-mlto.onrender.com'
     const [textInput, setInput] = useState("");
-    const mySubmit = async (e: React.MouseEvent) => {
+    const mySubmit = useCallback( async (e: React.MouseEvent) => {
         e.preventDefault();
+        const regex= urlRegex();
+        if (!regex.test(textInput)) {
+            alert("Please enter a valid URL");
+            return;
+        }
         console.log("clicked");
         const webUrl = `https://` + website + `/shrinkit`;
         const res = await fetch(webUrl, {
@@ -21,7 +26,7 @@ function App() {
         (document.getElementById("output") as HTMLElement).setAttribute("href", "https://" + website + "/" + finalUrl);
         console.log("completed");
 
-    }
+    },[textInput])
 
     return (
         <>
@@ -32,7 +37,7 @@ function App() {
                         setInput(e.target.value);
                         (document.getElementById("output") as HTMLElement).innerText = "";
                     }} />
-                    <button id="btn" onClick={mySubmit}>Shrink</button>
+                    <button id="btn" type="submit" onClick={mySubmit}>Shrink</button>
                 </form>
 
                 <a id="output" target="_blank"></a>
@@ -61,4 +66,4 @@ function App() {
     )
 }
 
-export default App
+export default App;
