@@ -4,9 +4,9 @@ import bodyParser from "body-parser"
 import { config } from "dotenv";
 import { createshort, getbyFullUrl, getByshortUrl } from "./db/dbSchema";
 import { authentication, random } from "./helper/helper";
-
+// import cors from "cors";
 const app = express();
-
+// app.use(cors());
 app.use(bodyParser.json());
 config();
 app.use((req, res, next) => {
@@ -54,11 +54,12 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
     try {
         const { fullurl } = req.body;
         if (!fullurl) {
-            return res.status(400).send("invalid")
+            return res.status(404).send("invalid")
         }
         const existing = await getbyFullUrl(fullurl).catch((err) => {
 
             console.log("unable to fetch from server");
+            throw new Error();
         });
         if (existing) {
 
@@ -68,6 +69,9 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
         const newcreated = await createshort({
             fullurl,
             shorturl: (authentication(salt, fullurl).slice(0, 10))
+        }).catch((err)=>{
+            console.log("error occurred at new entry creation");
+            throw new Error();
         })
 
         return res.status(200).send(newcreated.shorturl);

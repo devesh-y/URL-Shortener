@@ -13,20 +13,23 @@ function App() {
         }
         console.log("clicked");
         const webUrl = `https://` + website + `/shrinkit`;
-        const res: Response | void = await fetch(webUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ fullurl: textInput })
-        }).catch(() => {
+        let res: Response;
+        try {
+            res = await fetch(webUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullurl: textInput })
+            });
+        }
+        catch (err) {
             console.log("request failed");
             (document.getElementById("output") as HTMLElement).innerText = 'Request failed: Try Again';
             (document.getElementById("output") as HTMLElement).removeAttribute("href");
             console.log("completed");
             return;
-        });
-
+        }
         const finalUrl: string = await (res as Response).text();
         if (finalUrl === "error") {
             (document.getElementById("output") as HTMLElement).innerText = 'Error occurred: Try Again';
@@ -38,10 +41,6 @@ function App() {
         (document.getElementById("output") as HTMLElement).innerText = website + "/" + finalUrl;
         (document.getElementById("output") as HTMLElement).setAttribute("href", "https://" + website + "/" + finalUrl);
         console.log("completed");
-
-
-
-
     }, [textInput]);
 
     return (
