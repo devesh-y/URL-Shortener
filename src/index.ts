@@ -42,12 +42,12 @@ app.get("/:shorturl", async (req: express.Request, res: express.Response) => {
             res.status(200).redirect(existing.fullurl)
             return;
         }
-        return res.status(404).send("wrong")
+        return res.status(404).send("invalid entry or url expired");
 
     }
     catch (error) {
 
-        return res.status(400).send("error occured at register process")
+        return res.status(400).send("error occured at backend")
     }
 })
 app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
@@ -74,7 +74,7 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
 
     }
     catch (error) {
-        return res.status(400).send("error occured at register process")
+        return res.status(400).send("error");
     }
 })
 

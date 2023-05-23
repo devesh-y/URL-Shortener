@@ -4,29 +4,45 @@ import urlRegex from "url-regex";
 function App() {
     const website: string = 'sh-mlto.onrender.com'
     const [textInput, setInput] = useState("");
-    const mySubmit = useCallback( async (e: React.MouseEvent) => {
+    const mySubmit = useCallback(async (e: React.MouseEvent) => {
         e.preventDefault();
-        const regex= urlRegex();
+        const regex = urlRegex();
         if (!regex.test(textInput)) {
             alert("Please enter a valid URL");
             return;
         }
         console.log("clicked");
         const webUrl = `https://` + website + `/shrinkit`;
-        const res = await fetch(webUrl, {
+        const res: Response | void = await fetch(webUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fullurl:textInput })
+            body: JSON.stringify({ fullurl: textInput })
+        }).catch(() => {
+            console.log("request failed");
+            (document.getElementById("output") as HTMLElement).innerText = 'Request failed: Try Again';
+            (document.getElementById("output") as HTMLElement).removeAttribute("href");
+            console.log("completed");
+            return;
         });
-        const finalUrl: string = await res.text();
+
+        const finalUrl: string = await (res as Response).text();
+        if (finalUrl === "error") {
+            (document.getElementById("output") as HTMLElement).innerText = 'Error occurred: Try Again';
+            (document.getElementById("output") as HTMLElement).removeAttribute("href");
+            console.log("completed");
+            return;
+        }
         setInput("");
         (document.getElementById("output") as HTMLElement).innerText = website + "/" + finalUrl;
         (document.getElementById("output") as HTMLElement).setAttribute("href", "https://" + website + "/" + finalUrl);
         console.log("completed");
 
-    },[textInput])
+
+
+
+    }, [textInput]);
 
     return (
         <>
