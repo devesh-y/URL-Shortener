@@ -9,12 +9,18 @@ const app = express();
 // app.use(cors());
 app.use(bodyParser.json());
 config();
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Methods', 'GET');
-    next();
+app.use((req:express.Request, res:express.Response,next:express.NextFunction) => {
+    try{
+        res.header('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        res.header('Access-Control-Allow-Methods', 'POST');
+        res.header('Access-Control-Allow-Methods', 'GET');
+    }
+    catch(err){
+        return res.status(404).send("error");
+    }   
+    return next();
+    
 });
 
 const mongourl: string = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
@@ -25,7 +31,6 @@ mongoose.connection.on("error", (error: Error) => {
 })
 mongoose.connection.once('connected', () => {
     console.log('Connected to MongoDB');
-
 });
 setInterval(() => {
     console.log("service is on");
@@ -62,7 +67,6 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
             throw new Error();
         });
         if (existing) {
-
             return res.status(200).send(existing.shorturl)
         }
         const salt = random();

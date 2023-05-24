@@ -1,9 +1,18 @@
 import "./app.css"
 import React, { useCallback, useState } from "react";
 import urlRegex from "url-regex";
+const OutputShare=(props:any)=>{
+    const {textoutput}=props;
+    let regex = urlRegex();
+    return <>
+        <a href={regex.test(textoutput as string)?(textoutput as string):undefined} id="output" target="_blank">{textoutput}</a>
+    </>
+}
 function App() {
     const website: string = 'sh-mlto.onrender.com'
     const [textInput, setInput] = useState("");
+    const [outputstatus,setoutputstatus]=useState(false);
+    const [textoutput,setoutput]=useState("");
     const mySubmit = useCallback(async (e: React.MouseEvent) => {
         e.preventDefault();
         const regex = urlRegex();
@@ -24,23 +33,19 @@ function App() {
             });
         }
         catch (err) {
-            console.log("request failed");
-            (document.getElementById("output") as HTMLElement).innerText = 'Request failed: Try Again';
-            (document.getElementById("output") as HTMLElement).removeAttribute("href");
-            console.log("completed");
+            setoutput("Request failed: Try Again");
+            setoutputstatus(true);
             return;
         }
         const finalUrl: string = await (res as Response).text();
         if (finalUrl === "error") {
-            (document.getElementById("output") as HTMLElement).innerText = 'Error occurred: Try Again';
-            (document.getElementById("output") as HTMLElement).removeAttribute("href");
-            console.log("completed");
+            setoutput("Error occurred: Try Again");
+            setoutputstatus(true);
             return;
         }
         setInput("");
-        (document.getElementById("output") as HTMLElement).innerText = website + "/" + finalUrl;
-        (document.getElementById("output") as HTMLElement).setAttribute("href", "https://" + website + "/" + finalUrl);
-        console.log("completed");
+        setoutput(website + "/" + finalUrl);
+        setoutputstatus(true);
     }, [textInput]);
 
     return (
@@ -50,12 +55,13 @@ function App() {
                 <form id="formbox">
                     <input type="text" id="textinput" placeholder="Enter URL" value={textInput} onChange={(e): void => {
                         setInput(e.target.value);
-                        (document.getElementById("output") as HTMLElement).innerText = "";
+                        setoutputstatus(false);
                     }} />
                     <button id="btn" type="submit" onClick={mySubmit}>Shrink</button>
                 </form>
 
-                <a id="output" target="_blank"></a>
+                
+                {outputstatus?<OutputShare textoutput />  : <></>}
                 <div id="links">
                     <a href="https://github.com/devesh-y" target="_blank" title="devesh-y-github">
                         <svg id="devesh-y-github" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
