@@ -1,14 +1,16 @@
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-body{
 
-    background:linear-gradient(to right, rgb(172, 172, 242), rgb(243, 136, 136));
+body {
+
+    background: linear-gradient(to right, rgb(172, 172, 242), rgb(243, 136, 136));
 
 }
-#root{
+
+#root {
     width: 100%;
     min-height: 500px;
     height: 100vh;
@@ -16,40 +18,45 @@ body{
     justify-content: center;
     align-items: center;
 }
-#container{
+
+#container {
     width: 500px;
     height: 500px;
-    border-radius:20px ;
+    border-radius: 20px;
     background-color: rgb(186, 243, 243);
     position: relative;
 }
 
-#mytitletext{
-    width: fit-content;
+#mytitletext {
+    margin: auto;
+    width: 80%;
     font-size: 2.5em;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 900;
     margin: 50px auto;
-    background: -webkit-linear-gradient(left,#f84949, #53e427,rgb(111, 111, 241),violet);
+    background: -webkit-linear-gradient(left, #f84949, #53e427, rgb(111, 111, 241), violet);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-#formbox{
+
+#formbox {
     margin: auto;
-    width:80%;
+    width: 80%;
     height: fit-content;
 }
-#textinput{
+
+#textinput {
     outline: none;
-    border-radius:5px ;
+    border-radius: 5px;
     height: 50px;
     width: 100%;
     padding-left: 10px;
     font-size: 1.2em;
 }
-#btn{
+
+#btn {
     display: block;
-    padding:5px 10px;
+    padding: 5px 10px;
     border-radius: 10px;
     font-size: 1.2em;
     font-weight: 600;
@@ -58,20 +65,23 @@ body{
     color: white;
     width: 100px;
     margin: 10px auto;
-    
+
 }
-#output{
+
+#output {
     display: block;
     text-align: center;
     background-color: white;
-    border-radius:5px ;
+    border-radius: 5px;
     font-size: 1.7em;
     width: 80%;
     margin: auto;
     word-wrap: break-word;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
-#links{
+
+#links {
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -79,7 +89,17 @@ body{
     justify-content: center;
     gap: 20px;
 }
-#devesh-y-github,#devesh-y-linkedin{
+
+#sharebutton {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    gap: 20px;
+}
+
+svg {
     width: 50px;
     height: 50px;
 }
