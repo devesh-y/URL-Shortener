@@ -5,21 +5,17 @@
 }
 
 body {
-
     background: linear-gradient(to right, rgb(172, 172, 242), rgb(243, 136, 136));
-
-}
-
-#root {
-    width: 100%;
-    min-height: 500px;
     height: 100vh;
+    min-height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#container {
+#root {
+    min-width: 300px;
+    min-height: 500px;
     width: 500px;
     height: 500px;
     border-radius: 20px;
@@ -29,11 +25,11 @@ body {
 
 #mytitletext {
     margin: auto;
-    width: 80%;
+    width: fit-content;
     font-size: 2.5em;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 900;
-    margin: 50px auto;
+    margin: 30px auto;
     background: -webkit-linear-gradient(left, #f84949, #53e427, rgb(111, 111, 241), violet);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -81,6 +77,15 @@ body {
     margin-bottom: 10px;
 }
 
+#sharebutton {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    gap: 20px;
+}
+
 #links {
     width: 100%;
     position: absolute;
@@ -90,14 +95,6 @@ body {
     gap: 20px;
 }
 
-#sharebutton {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    align-items: center;
-    gap: 20px;
-}
 
 svg {
     width: 50px;
