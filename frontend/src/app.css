@@ -60,7 +60,8 @@ body {
     background-color: blue;
     color: white;
     width: 100px;
-    margin: 10px auto;
+    margin:auto;
+    margin-top: 10px;
 
 }
 

@@ -1,5 +1,5 @@
 import "./app.css"
-import React, { useCallback, useState } from "react";
+import React, { useState, useTransition } from "react";
 import urlRegex from "url-regex";
 const Sharelinks = (props: any) => {
     const { textoutput } = props;
@@ -31,14 +31,10 @@ function App() {
     const [textInput, setInput] = useState("");
     const [outputstatus, setoutputstatus] = useState(false);
     const [textoutput, setoutput] = useState("");
-    const mySubmit = useCallback(async (e: React.MouseEvent) => {
-        e.preventDefault();
-        const regex = urlRegex();
-        if (!regex.test(textInput)) {
-            alert("Please enter a valid URL");
-            return;
-        }
-        console.log("clicked");
+    const [isloading,setloading]=useState(false);
+    const [_ispending, startTransition] = useTransition();
+    const fetchData = async () => {
+
         const webUrl = `https://` + website + `/shrinkit`;
         let res: Response;
         try {
@@ -53,18 +49,35 @@ function App() {
         catch (err) {
             setoutput("Request failed: Try Again");
             setoutputstatus(true);
+            setloading(false);
             return;
         }
         const finalUrl: string = await (res as Response).text();
         if (finalUrl === "error") {
             setoutput("Error occurred: Try Again");
             setoutputstatus(true);
+            setloading(false);
             return;
         }
         setInput("");
         setoutput(website + "/" + finalUrl);
         setoutputstatus(true);
-    }, [textInput]);
+        setloading(false);
+    }
+    const mySubmit = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        console.log("clicked");
+        const regex = urlRegex();
+        if (!regex.test(textInput)) {
+            alert("Please enter a valid URL");
+            return;
+        }
+        setloading(true);
+        setoutputstatus(false);
+        startTransition(() => {
+            fetchData();
+        })
+    };
 
     return (
         <>
@@ -74,7 +87,8 @@ function App() {
                     setInput(e.target.value);
                     setoutputstatus(false);
                 }} />
-                <button id="btn" type="submit" onClick={mySubmit}>Shrink</button>
+                {isloading ? <p style={{ margin: "auto", width: "fit-content",fontSize:"1.2em",marginTop:"10px"}}>Loading...</p> : <button id="btn" type="submit" onClick={mySubmit}>Shrink</button>}
+
             </form>
 
             {outputstatus ? <Output textoutput={textoutput} /> : <></>}
