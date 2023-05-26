@@ -31,6 +31,7 @@ body {
     font-weight: 900;
     margin: 30px auto;
     background: -webkit-linear-gradient(left, #f84949, #53e427, rgb(111, 111, 241), violet);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
