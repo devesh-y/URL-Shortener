@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 config();
 app.use((req:express.Request, res:express.Response,next:express.NextFunction) => {
     try{
-        res.header('Access-Control-Allow-Origin', 'https://urlshortener-dev.netlify.app');
+        res.header('Access-Control-Allow-Origin', 'https://tinylink.netlify.app');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
         res.header('Access-Control-Allow-Methods', 'POST');
         res.header('Access-Control-Allow-Methods', 'GET');
