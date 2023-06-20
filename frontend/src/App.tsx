@@ -81,6 +81,7 @@ function App() {
 
     return (
         <>
+        <p style={{position:"fixed",color:"red",transform:"translate(8px)"}}>Server is deployed on a shared instance. It may take 30s to restart the server</p>
             <p id="mytitletext">URL SHORTENER</p>
             <form id="formbox">
                 <input type="text" id="textinput" placeholder="Enter URL" value={textInput} onChange={(e): void => {
