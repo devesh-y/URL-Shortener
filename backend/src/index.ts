@@ -72,7 +72,7 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
         const salt = random();
         const newcreated = await createshort({
             fullurl,
-            shorturl: (authentication(salt, fullurl).slice(0, 10))
+            shorturl: (authentication(salt, fullurl).slice(0, 5))
         }).catch((err)=>{
             console.log("error occurred at new entry creation");
             throw new Error();
