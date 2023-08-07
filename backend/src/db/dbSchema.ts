@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-const urlschema=new mongoose.Schema({
+import { Schema } from "mongoose";
+const urlschema=new Schema({
     fullurl:{type:String,required:true},
     shorturl:{type:String,required:true},
     clicks:{type:Number,default:0}

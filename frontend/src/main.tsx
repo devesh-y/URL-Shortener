@@ -1,11 +1,10 @@
-import React, { lazy } from 'react'
+import { lazy } from 'react'
 import "./index.css"
 import ReactDOM from 'react-dom/client'
 import { Suspense } from 'react'
 import { ColorRing } from 'react-loader-spinner';
 const App = lazy(() => import("./App"));
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
     <Suspense
       fallback={
         <div>
@@ -22,5 +21,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     >
       <App />
     </Suspense>
-  </React.StrictMode>,
+  
 )

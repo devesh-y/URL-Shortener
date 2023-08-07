@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import bodyParser from "body-parser"
 import { config } from "dotenv";
 import { createshort, getbyFullUrl, getByshortUrl } from "./db/dbSchema";
 import { authentication, random } from "./helper/helper";
 // import cors from "cors";
 const app = express();
 // app.use(cors());
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
 config();
 app.use((req:express.Request, res:express.Response,next:express.NextFunction) => {
     try{
