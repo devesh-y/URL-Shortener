@@ -3,25 +3,17 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 import { createshort, getbyFullUrl, getByshortUrl } from "./db/dbSchema";
 import { authentication, random } from "./helper/helper";
-// import cors from "cors";
+import cors from "cors";
 const app = express();
-// app.use(cors());
+app.use(cors(
+    {
+        origin:'https://tinylink.netlify.app',
+        methods:['GET','POST']
+    }
+));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 config();
-app.use((req:express.Request, res:express.Response,next:express.NextFunction) => {
-    try{
-        res.header('Access-Control-Allow-Origin', 'https://tinylink.netlify.app');
-        res.header('Access-Control-Allow-Headers', 'Content-Type');
-        res.header('Access-Control-Allow-Methods', 'POST');
-        res.header('Access-Control-Allow-Methods', 'GET');
-    }
-    catch(err){
-        return res.status(404).send("error");
-    }   
-    return next();
-    
-});
 
 const mongourl: string = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 mongoose.Promise = Promise;
