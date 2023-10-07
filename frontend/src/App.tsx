@@ -14,9 +14,9 @@ const Sharelinks = (props: { textoutput: string; }) => {
         </div>
     </>
 }
-const Output = (props: any) => {
+const Output = (props: { textoutput: string; }) => {
     const { textoutput } = props;
-    let regex = urlRegex();
+    const regex = urlRegex();
     return <>
         {regex.test("https://" + textoutput) ? <>
             <a href={"https://" + textoutput} id="output" target="_blank">{textoutput}</a>
@@ -27,12 +27,12 @@ const Output = (props: any) => {
 }
 
 function App() {
-    const website: string = 'sh-mlto.onrender.com'
+    const website = 'sh-mlto.onrender.com'
     const [textInput, setInput] = useState("");
     const [outputstatus, setoutputstatus] = useState(false);
     const [textoutput, setoutput] = useState("");
     const [isloading,setloading]=useState(false);
-    const [_ispending, startTransition] = useTransition();
+    const [ispending, startTransition] = useTransition();
     const fetchData = async () => {
 
         const webUrl = `https://` + website + `/shrinkit`;
