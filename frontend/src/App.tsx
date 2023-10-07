@@ -1,7 +1,7 @@
 import "./app.css"
 import React, { useState, useTransition } from "react";
 import urlRegex from "url-regex";
-const Sharelinks = (props: any) => {
+const Sharelinks = (props: { textoutput: string; }) => {
     const { textoutput } = props;
     return <>
         <div id="sharebutton">
