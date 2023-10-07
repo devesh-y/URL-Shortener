@@ -32,7 +32,7 @@ function App() {
     const [outputstatus, setoutputstatus] = useState(false);
     const [textoutput, setoutput] = useState("");
     const [isloading,setloading]=useState(false);
-    const [ispending, startTransition] = useTransition();
+    const [, startTransition] = useTransition();
     const fetchData = async () => {
 
         const webUrl = `https://` + website + `/shrinkit`;
