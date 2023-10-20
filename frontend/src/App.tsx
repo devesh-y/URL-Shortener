@@ -27,15 +27,14 @@ const Output = (props: { textoutput: string; }) => {
 }
 
 function App() {
-    const website = 'sh-mlto.onrender.com'
+
     const [textInput, setInput] = useState("");
     const [outputstatus, setoutputstatus] = useState(false);
     const [textoutput, setoutput] = useState("");
     const [isloading,setloading]=useState(false);
     const [, startTransition] = useTransition();
     const fetchData = async () => {
-
-        const webUrl = `https://` + website + `/shrinkit`;
+        const webUrl = `${import.meta.env.VITE_BACKEND}` + `/shrinkit`;
         let res: Response;
         try {
             res = await fetch(webUrl, {
@@ -60,7 +59,10 @@ function App() {
             return;
         }
         setInput("");
-        setoutput(website + "/" + finalUrl);
+        const hostname=new URL(import.meta.env.VITE_BACKEND).hostname;
+        const port=new URL(import.meta.env.VITE_BACKEND).port;
+
+        setoutput(hostname+`:`+port + "/" + finalUrl);
         setoutputstatus(true);
         setloading(false);
     }
