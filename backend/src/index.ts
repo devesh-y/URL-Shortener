@@ -7,7 +7,7 @@ import cors from "cors";
 const app = express();
 app.use(cors(
     {
-        origin:'https://tinylink.netlify.app',
+        origin:`${process.env.WEBSITE}`,
         methods:['GET','POST']
     }
 ));
@@ -16,17 +16,23 @@ app.use(express.json());
 config();
 
 const mongourl: string = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-mongoose.Promise = Promise;
-mongoose.connect(mongourl);
-mongoose.connection.on("error", (error: Error) => {
-    console.log("error occured at initial connection with database");
-})
-mongoose.connection.once('connected', () => {
-    console.log('Connected to MongoDB');
-});
-setInterval(() => {
-    console.log("service is on");
-}, 60000)
+
+const connect_to_mongo=()=>{
+    mongoose.connect(mongourl).then( ()=>{
+        console.log("Successfully connected to MongoDb");
+    }).catch( ()=>{
+        console.log("error occurred while connection to MongoDb")
+        setTimeout(()=>{
+            connect_to_mongo();
+        },3000)
+    })
+}
+connect_to_mongo();
+
+
+// setInterval(() => {
+//     console.log("service is on");
+// }, 60000)
 app.get("/:shorturl", async (req: express.Request, res: express.Response) => {
     try {
         const { shorturl } = req.params;
@@ -35,7 +41,7 @@ app.get("/:shorturl", async (req: express.Request, res: express.Response) => {
         })
         if (existing) {
             existing.clicks++;
-            existing.save();
+            await existing.save();
             res.status(200).redirect(existing.fullurl)
             return;
         }
@@ -53,7 +59,7 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
         if (!fullurl) {
             return res.status(404).send("invalid")
         }
-        const existing = await getbyFullUrl(fullurl).catch((err) => {
+        const existing = await getbyFullUrl(fullurl).catch(() => {
 
             console.log("unable to fetch from server");
             throw new Error();
@@ -65,7 +71,7 @@ app.post("/shrinkit", async (req: express.Request, res: express.Response) => {
         const newcreated = await createshort({
             fullurl,
             shorturl: (authentication(salt, fullurl).slice(0, 5))
-        }).catch((err)=>{
+        }).catch(()=>{
             console.log("error occurred at new entry creation");
             throw new Error();
         })
