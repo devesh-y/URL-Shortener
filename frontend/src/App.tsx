@@ -62,7 +62,7 @@ function App() {
         const hostname=new URL(import.meta.env.VITE_BACKEND).hostname;
         const port=new URL(import.meta.env.VITE_BACKEND).port;
 
-        setoutput(hostname+`:`+port + "/" + finalUrl);
+        setoutput(hostname+((port==='') ?``:`:${port}`) + "/" + finalUrl);
         setoutputstatus(true);
         setloading(false);
     }
