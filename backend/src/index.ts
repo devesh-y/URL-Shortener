@@ -11,7 +11,6 @@ app.use(cors(
         methods:['GET','POST']
     }
 ));
-app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 config();
 

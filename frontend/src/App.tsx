@@ -1,8 +1,8 @@
 import "./app.css"
 import React, { useState, useTransition } from "react";
 import urlRegex from "url-regex";
-const Sharelinks = (props: { textoutput: string; }) => {
-    const { textoutput } = props;
+const Sharelinks = ( { textoutput}:{textoutput:string}) => {
+
     return <>
         <div id="sharebutton">
             <a href={"https://api.whatsapp.com/send?text=" + encodeURIComponent(textoutput)} target="_blank">
