@@ -51,8 +51,8 @@ function App() {
             setloading(false);
             return;
         }
-        const finalUrl: string = await (res as Response).text();
-        if (finalUrl === "error") {
+        const code: string = await (res as Response).text();
+        if (code === "error") {
             setoutput("Error occurred: Try Again");
             setoutputstatus(true);
             setloading(false);
@@ -60,9 +60,8 @@ function App() {
         }
         setInput("");
         const hostname=new URL(import.meta.env.VITE_BACKEND).hostname;
-        const port=new URL(import.meta.env.VITE_BACKEND).port;
 
-        setoutput(hostname+((port==='') ?``:`:${port}`) + "/" + finalUrl);
+        setoutput(hostname+ "/" + code);
         setoutputstatus(true);
         setloading(false);
     }
@@ -83,7 +82,7 @@ function App() {
 
     return (
         <>
-        <p style={{position:"fixed",color:"red",transform:"translate(8px)"}}>Server is deployed on a shared instance. It may take 30s to restart the server</p>
+        {/* <p style={{position:"fixed",color:"red",transform:"translate(8px)"}}>Server is deployed on a shared instance. It may take 1m to restart the server</p> */}
             <p id="mytitletext">URL SHORTENER</p>
             <form id="formbox">
                 <input type="text" id="textinput" placeholder="Enter URL" value={textInput} onChange={(e): void => {
