@@ -1,18 +1,18 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
+config();
 import { createshort, getbyFullUrl, getByshortUrl } from "./db/dbSchema";
 import { authentication, random } from "./helper/helper";
 import cors from "cors";
 const app = express();
 app.use(cors(
     {
-        origin:`${process.env.WEBSITE}`,
+        origin:[`${process.env.WEBSITE}`],
         methods:['GET','POST']
     }
 ));
 app.use(express.json());
-config();
 
 const mongourl: string = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@urldb.wceiyu6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 
